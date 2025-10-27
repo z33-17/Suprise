@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday 💖</title>
+
+  <style>
+    /* === CUSTOM FONT === */
+    @font-face {
+      font-family: 'JPFont';
+      src: url('font/jp.otf') format('opentype');
+      font-display: swap;
+    }
+
+    /* === COLOR VARIABLES === */
+    :root {
+      --main-pink: #e11d48;
+      --light-pink: #ffc1d6;
+      --text-dark: #092e5c;
+    }
+
+    /* === BODY BASE STYLE === */
+    body {
+      margin: 0;
+      font-family: 'JPFont', "Poppins", sans-serif;
+      background: url('images/border.jfif') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* === STARRY OVERLAY === */
+    body::after {
+      content: "";
+      background: url("https://www.transparenttextures.com/patterns/tiny-stars.png");
+      opacity: 0.2;
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    /* === ENTRANCE ANIMATION === */
+    .intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #ffc1d6, #ffe4ec, #e6e9ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 999;
+      animation: fadeOut 2.5s ease-in-out 3.2s forwards;
+    }
+
+    .intro h1 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: #d00ba2;
+      opacity: 0;
+      animation: fadeInText 2s ease-in forwards 1s;
+      text-shadow: 0 0 15px rgba(238, 2, 242, 0.4);
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .intro span {
+      font-size: 2rem;
+      margin-top: 15px;
+      opacity: 0;
+      animation: floatHearts 3s ease-in-out infinite alternate 1.8s;
+    }
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatHearts {
+      0% { opacity: 0.5; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(-10px); }
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* === HEADER === */
+    header {
+      text-align: center;
+      padding: 40px 20px 10px;
+      color: var(--text-dark);
+    }
+
+    header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #ffffff;
+      max-width: 500px;
+      margin: 0 auto;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    }
+
+    /* === BUTTON STYLE === */
+    button, a.btn {
+      background-color: var(--main-pink);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 500;
+      margin: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+    }
+
+    button:hover, a.btn:hover {
+      background-color: #be123c;
+      transform: scale(1.05);
+    }
+
+    /* === PORTRAIT FRAME === */
+    .portrait {
+      position: relative;
+      width: 90%;
+      max-width: 260px;
+      aspect-ratio: 1 / 1;
+      border-radius: 25px;
+      overflow: visible;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      border: 4px solid white;
+      margin: 20px auto;
+    }
+
+    .frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 25px;
+      object-fit: cover;
+      z-index: 3;
+      position: relative;
+      transform: scale(1.03);
+      transition: 0.4s ease;
+    }
+
+    .frame img:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 25px rgba(255, 150, 200, 0.9));
+    }
+
+    .frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('images/goldrose.png') no-repeat center center;
+      background-size: cover;
+      opacity: 0.9;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* === HEART FLOAT === */
+    .hearts span {
+      position: absolute;
+      animation: floatUp 6s linear infinite;
+      opacity: 0;
+    }
+
+    .hearts span:nth-child(1) { left: 20%; animation-delay: 0s; font-size: 26px; }
+    .hearts span:nth-child(2) { left: 50%; animation-delay: 2s; font-size: 22px; }
+    .hearts span:nth-child(3) { left: 80%; animation-delay: 4s; font-size: 24px; }
+
+    @keyframes floatUp {
+      0% { bottom: 0; opacity: 0; transform: scale(0.9); }
+      30% { opacity: 1; }
+      100% { bottom: 400px; opacity: 0; transform: scale(1.2); }
+    }
+
+    /* === GALLERY === */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 30px 10px;
+      width: 100%;
+      max-width: 1000px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .card:hover { transform: scale(1.03); }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 10px 15px 5px;
+      color: #222;
+    }
+
+    .card p {
+      margin: 0 15px 15px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: rgba(255, 240, 245, 0.7);
+      width: 100%;
+      text-align: center;
+      padding: 30px 10px;
+      color: #b91c1c;
+      font-weight: 500;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+    }
+
+    /* === HIDDEN MESSAGE === */
+    #hidden-msg {
+      display: none;
+      font-size: 1.1rem;
+      color: #ffffff;
+      margin-top: 15px;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1024px) {
+      header { padding: 30px 10px; }
+      .portrait { max-width: 220px; }
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      header p { font-size: 0.9rem; padding: 0 10px; }
+      .portrait { max-width: 200px; }
+      .card img { height: 160px; }
+      footer { padding: 20px 10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- === ENTRANCE ANIMATION === -->
+  <div class="intro">
+    <h1>Happy Birthday, Saja (My Beloved Wifey) 💖</h1>
+    <span>💞💓💕</span>
+  </div>
+
+  <!-- === HEADER === -->
+  <header>
+    <h1>Happy Birthday 🎂</h1>
+    <p>To the one who stole my heart💝 every laugh😂, every quiet moment🤐. This is for you🍒. I love you super duper much🌹</p>
+  </header>
+
+  <!-- === MAIN PORTRAIT === -->
+  <div class="portrait frame">
+    <img src="images/facee.jpg" alt="Her portrait">
+    <div class="hearts">
+      <span>💙</span>
+      <span>🤍</span>
+      <span>💙</span>
+      <span>🤍</span>
+      <span>💙</span>
+      <span>🤍</span>
+  
+    </div>
+  </div>
+
+  <!-- === GALLERY === -->
+  <section id="gallery" class="gallery">
+    <div class="card">
+      <img src="images/abs.jpg" alt="Abs">
+      <h3>Abs</h3>
+      <p>A detail I can’t stop admiring.</p>
+    </div>
+    <div class="card">
+      <img src="images/hands.jpg" alt="Hands">
+      <h3>Hands</h3>
+      <p>Where warmth feels like home.</p>
+    </div>
+    <div class="card">
+      <img src="images/jawline.jpg" alt="Jawline">
+      <h3>Jawline</h3>
+      <p>Sharp enough to melt hearts.</p>
+    </div>
+    <div class="card">
+      <img src="images/face.jpg" alt="Eyes">
+      <h3>Eyes</h3>
+      <p>Elegant and unforgettable.</p>
+    </div>
+  </section>
+
+  <!-- === SECRET MESSAGE === -->
+  <button id="reveal-btn" class="btn">Reveal My Message 💌</button>
+  <p id="hidden-msg">“You’re the calm in my chaos, the reason I smile without knowing why, and the dream I never want to wake up from.”</p>
+
+  <!-- === FOOTER === -->
+  <footer>
+    <p>I’ll keep building — for us. This is only the beginning. 💞</p>
+  </footer>
+
+  <!-- === MUSIC + CONFETTI === -->
+  <audio id="bg-music" src="audio/[DANDELIONS] - EDIT AUDIO VENUS..mp3" loop></audio>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const music = document.getElementById("bg-music");
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        music.play().catch(err => console.log("Autoplay blocked:", err));
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
+      }, 3200);
+    });
+
+    // Reveal message
+    const btn = document.getElementById("reveal-btn");
+    const msg = document.getElementById("hidden-msg");
+    btn.addEventListener("click", () => {
+      msg.style.display = "block";
+      confetti({ particleCount: 100, spread: 100 });
+    });
+
+    // Outro thank-you fade
+    setTimeout(() => {
+      document.body.innerHTML = `
+        <div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;text-align:center;">
+          <h1 style="color:#0066ff;font-family:'JPFont',cursive;">Thank you for being my everything 💙</h1>
+          <p style="color:#ccc;font-family:'JPFont',sans-serif;">– Yours always Zeeshan :)</p>
+        </div>`;
+    }, 3000000);
+  </script>
+</body>
+</html>
