@@ -101,6 +101,13 @@
     header h1 {
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       margin-bottom: 10px;
+      text-shadow: 0 0 15px #ff77c0, 0 0 30px #ff3399;
+      animation: glowPulse 2.5s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 10px #ff77c0; }
+      to { text-shadow: 0 0 25px #ff3399; }
     }
 
     header p {
@@ -130,6 +137,21 @@
       transform: scale(1.05);
     }
 
+    /* === MUSIC BUTTON (TOP RIGHT) === */
+    #music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: none;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* === PORTRAIT FRAME === */
     .portrait {
       position: relative;
@@ -157,6 +179,23 @@
     .frame img:hover {
       transform: scale(1.05);
       filter: drop-shadow(0 0 25px rgba(255, 150, 200, 0.9));
+    }
+
+    /* 🌈 GLOWING PORTRAIT AURA */
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: -5px;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff0080, #ff80bf, #80cfff);
+      filter: blur(12px);
+      z-index: 0;
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { opacity: 0.6; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.05); }
     }
 
     .frame::after {
@@ -246,21 +285,6 @@
       padding: 0 10px;
     }
 
-    /* === MUSIC BUTTON (TOP RIGHT) === */
-    #music-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      animation: fadeIn 1.5s ease-in-out forwards;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     /* === RESPONSIVE DESIGN === */
     @media (max-width: 1024px) {
       header { padding: 30px 10px; }
@@ -289,6 +313,9 @@
     <h1>Happy Birthday 🎂</h1>
     <p>To the one who stole my heart💝 every laugh😂, every quiet moment🤐. This is for you🍒. I love you super duper much🌹</p>
   </header>
+
+  <!-- === MUSIC BUTTON (TOP RIGHT) === -->
+  <button id="music-btn" class="btn">🎵 Play Music</button>
 
   <!-- === MAIN PORTRAIT === -->
   <div class="portrait frame">
@@ -338,8 +365,6 @@
 
   <!-- === MUSIC + CONFETTI === -->
   <audio id="bg-music" src="audio/[DANDELIONS] - EDIT AUDIO VENUS..mp3" loop></audio>
-  <button id="music-btn" class="btn" style="display:none;">🎵 Play Music</button>
-
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
@@ -348,25 +373,47 @@
     const btn = document.getElementById("reveal-btn");
     const msg = document.getElementById("hidden-msg");
 
-    // Show Play Music button after intro fades out
+    // 🌸 Show music button after intro
     window.addEventListener("load", () => {
       setTimeout(() => {
         musicBtn.style.display = "inline-block";
       }, 3200);
     });
 
-    // Play music when button clicked
+    // 🎵 Play music when clicked
     musicBtn.addEventListener("click", () => {
       music.play();
       musicBtn.style.display = "none";
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 } });
     });
 
-    // Reveal message
+    // 💌 Reveal message
     btn.addEventListener("click", () => {
       msg.style.display = "block";
       confetti({ particleCount: 100, spread: 100 });
     });
+
+    // 🌸 FLOATING HEARTS EFFECT
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.textContent = "💗";
+      heart.style.position = "fixed";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 10 + "px";
+      heart.style.top = "100vh";
+      heart.style.animation = "floatHeart 6s linear";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 800);
+
+    const style = document.createElement("style");
+    style.innerHTML = `
+      @keyframes floatHeart {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-100vh); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
 
     // Outro thank-you fade
     setTimeout(() => {
@@ -375,7 +422,7 @@
           <h1 style="color:#0066ff;font-family:'JPFont',cursive;">Thank you for being my everything 💙</h1>
           <p style="color:#ccc;font-family:'JPFont',sans-serif;">– Yours always Zeeshan :)</p>
         </div>`;
-    }, 3000000);
+    }, 10000);
   </script>
 </body>
 </html>
