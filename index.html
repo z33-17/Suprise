@@ -138,14 +138,15 @@
     }
 
     /* === MUSIC BUTTON (TOP RIGHT) === */
-    #music-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      display: none;
-      animation: fadeIn 0s ease-in-out forwards;
-    }
+ #music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: inline-block;
+  animation: fadeIn 0s ease-in-out forwards;
+}
+
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -374,11 +375,11 @@
     const msg = document.getElementById("hidden-msg");
 
     // 🌸 Show music button after intro
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        musicBtn.style.display = "inline-block";
-      }, 3200);
-    });
+// 🌸 Show music button immediately on load
+window.addEventListener("load", () => {
+  musicBtn.style.display = "inline-block";
+});
+
 
     // 🎵 Play music when clicked
     musicBtn.addEventListener("click", () => {
@@ -426,4 +427,5 @@
   </script>
 </body>
 </html>
+
 
